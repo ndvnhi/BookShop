@@ -68,7 +68,7 @@ namespace MyShop
                     var Category_Id = (int)reader["category_id"];
                     var Category_Name = _categories?.FirstOrDefault(c => c.Id == Category_Id)?.Name;
 
-                    var book = new Book(Id, Name, coverImage, Author, Year, Price, Category_Id, Category_Name);
+                    var book = new Book(Id, Name, Cover_Images, Author, Year, Price, Category_Id, Category_Name);
                     _books.Add(book);
 
                     count = (int)reader["Total"];

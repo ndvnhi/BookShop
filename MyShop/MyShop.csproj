@@ -11,9 +11,55 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
   </ItemGroup>
+	<ItemGroup>
+		<None Remove="assets\Book\01.jpg" />
+		<None Remove="assets\Book\02.jpg" />
+		<None Remove="assets\Book\03.jpg" />
+		<None Remove="assets\Book\04.jpg" />
+		<None Remove="assets\Book\05.jpg" />
+		<None Remove="assets\Book\06.jpg" />
+		<None Remove="assets\Book\07.jpg" />
+		<None Remove="assets\Book\08.jpg" />
+		<None Remove="assets\Book\09.jpg" />
+		<None Remove="assets\Book\10.jpg" />
+		<None Remove="assets\Book\11.jpg" />
+		<None Remove="assets\Book\12.jpg" />
+		<None Remove="assets\Book\13.jpg" />
+		<None Remove="assets\Book\14.jpg" />
+		<None Remove="assets\Book\15.jpg" />
+		<None Remove="assets\Book\16.jpg" />
+		<None Remove="assets\Book\17.jpg" />
+		<None Remove="assets\Book\18.jpg" />
+		<None Remove="assets\Book\19.jpg" />
+		<None Remove="assets\Book\20.jpg" />
+		<None Remove="assets\Book\21.jpg" />
+	</ItemGroup>
 
   <ItemGroup>
     <Folder Include="DTO\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Resource Include="assets\Book\01.jpg" />
+		<Resource Include="assets\Book\02.jpg" />
+		<Resource Include="assets\Book\03.jpg" />
+		<Resource Include="assets\Book\04.jpg" />
+		<Resource Include="assets\Book\05.jpg" />
+		<Resource Include="assets\Book\06.jpg" />
+		<Resource Include="assets\Book\07.jpg" />
+		<Resource Include="assets\Book\08.jpg" />
+		<Resource Include="assets\Book\09.jpg" />
+		<Resource Include="assets\Book\10.jpg" />
+		<Resource Include="assets\Book\11.jpg" />
+		<Resource Include="assets\Book\12.jpg" />
+		<Resource Include="assets\Book\13.jpg" />
+		<Resource Include="assets\Book\14.jpg" />
+		<Resource Include="assets\Book\15.jpg" />
+		<Resource Include="assets\Book\16.jpg" />
+		<Resource Include="assets\Book\17.jpg" />
+		<Resource Include="assets\Book\18.jpg" />
+		<Resource Include="assets\Book\19.jpg" />
+		<Resource Include="assets\Book\20.jpg" />
+		<Resource Include="assets\Book\21.jpg" />
+	</ItemGroup>
 </Project>

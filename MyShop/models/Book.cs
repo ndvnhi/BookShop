@@ -11,10 +11,11 @@ namespace MyShop.models
     {
         public Book() {}
 
-        public Book(int id, string name, BitmapImage coverImage, string author, int year, double price, int category_Id, string? category_Name)
+        public Book(int id, string name, string coverImage, string author, int year, double price, int category_Id, string? category_Name)
         {
             Id = id;
             Name = name;
+            Cover_Image = coverImage;
             Author = author;
             Year = year;
             Price = price;
