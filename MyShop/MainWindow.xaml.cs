@@ -1,19 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Data;
-using System.IO;
-
+using MyShop.models;
+using MyShop.DAO;
 
 namespace MyShop
 {
@@ -46,51 +38,20 @@ namespace MyShop
 
         private void LoadAllBooks()
         {
-            SqlCommand command;
-
+            int category_id = -1;
             if (_selectedCategory != null)
             {
-                var sql = @"
-                    SELECT *, COUNT(*) OVER() AS Total
-                    FROM MoreBook
-                    WHERE name LIKE @Keyword 
-                        AND category_id = @CategoryId
-                        AND price >= @MinPrice AND price <= @MaxPrice
-
-                    ORDER BY id
-                    OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
-
-                command = new SqlCommand(sql, DB.Instance.Connection);
-                command.Parameters.Add("@CategoryId", SqlDbType.Int).Value = _selectedCategory.Id;
+                category_id = _selectedCategory.Id;
             }
-            else
-            {
-                var sql = @"
-                    SELECT *, COUNT(*) OVER() AS Total
-                    FROM MoreBook
-                    WHERE name LIKE @Keyword 
-                        AND price >= @MinPrice AND price <= @MaxPrice
-
-                    ORDER BY id
-                    OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
-
-                command = new SqlCommand(sql, DB.Instance.Connection);
-            }
-
-            command.Parameters.Add("@Skip", SqlDbType.Int).Value = (_currentPage - 1) * _rowsPerPage;
-            command.Parameters.Add("@Take", SqlDbType.Int).Value = _rowsPerPage;
-            var keyword = keywordTextBox.Text;
-            command.Parameters.Add("@Keyword", SqlDbType.Text).Value = $"%{keyword}%";
-
-            // for price range
-            command.Parameters.Add("@MinPrice", SqlDbType.Decimal).Value = decimal.TryParse(minPriceTextBox.Text, out decimal minPrice) ? minPrice : 0;
-            command.Parameters.Add("@MaxPrice", SqlDbType.Decimal).Value = decimal.TryParse(maxPriceTextBox.Text, out decimal maxPrice) ? maxPrice : decimal.MaxValue;
-
+            decimal min_price = decimal.TryParse(minPriceTextBox.Text, out min_price) ? min_price : 0;
+            decimal max_price = decimal.TryParse(maxPriceTextBox.Text, out max_price) ? max_price : decimal.MaxValue;
+            string keyword = keywordTextBox.Text;
+            var reader = BookDAO.getBooksWithCondition(min_price, max_price, (_currentPage - 1) * _rowsPerPage, _rowsPerPage, keyword, category_id);
 
             int count = -1;
             _books = new BindingList<Book>();
 
-            using (var reader = command.ExecuteReader())
+            using (reader)
             {
                 while (reader.Read())
                 {
@@ -107,17 +68,7 @@ namespace MyShop
                     var Category_Id = (int)reader["category_id"];
                     var Category_Name = _categories?.FirstOrDefault(c => c.Id == Category_Id)?.Name;
 
-                    var book = new Book()
-                    {
-                        Id = Id,
-                        Name = Name,
-                        Cover_Image = Cover_Images,
-                        Author = Author,
-                        Year = Year,
-                        Price = Price,
-                        Category_Id = Category_Id,
-                        Category_Name = Category_Name
-                    };
+                    var book = new Book(Id, Name, coverImage, Author, Year, Price, Category_Id, Category_Name);
                     _books.Add(book);
 
                     count = (int)reader["Total"];

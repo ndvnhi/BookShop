@@ -1,5 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using MyShop;
+using MyShop.models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
