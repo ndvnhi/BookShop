@@ -49,6 +49,7 @@ namespace MyShop
             txtYear.Text = _currentBook.Year.ToString();
             txtPrice.Text = _currentBook.Price.ToString();
             cmbCategory.SelectedValue = _currentBook.Category_Id;
+            txtQuantity.Text = _currentBook.Quantity.ToString();
 
             DataContext = _currentBook;
         }
@@ -146,6 +147,16 @@ namespace MyShop
                 return;
             }
 
+            if (int.TryParse(txtQuantity.Text, out int quantity))
+            {
+                _currentBook.Quantity = quantity;
+            }
+            else
+            {
+                MessageBox.Show("Invalid quantity format.");
+                return;
+            }
+
             UpdateBookInDatabase(_currentBook);
 
             MessageBox.Show($"Book '{_currentBook.Name}' updated successfully.");
@@ -162,7 +173,7 @@ namespace MyShop
 
                     string update_sql = @"
                         UPDATE MoreBook 
-                        SET name = @Name, cover_image = @Cover_Image, author = @Author, year = @Year, price = @Price, category_id = @Category_Id 
+                        SET name = @Name, cover_image = @Cover_Image, author = @Author, year = @Year, price = @Price, category_id = @Category_Id, quantity = @Quantity 
                         WHERE id = @Id";
                     using (var command = new SqlCommand(update_sql, connection))
                     {
@@ -173,6 +184,7 @@ namespace MyShop
                         command.Parameters.Add("@Price", System.Data.SqlDbType.Decimal).Value = book.Price; // Use decimal type
 
                         command.Parameters.Add("@Category_Id", System.Data.SqlDbType.Int).Value = book.Category_Id;
+                        command.Parameters.Add("@Quantity", System.Data.SqlDbType.Int).Value = book.Quantity;
 
                         command.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = book.Id;
 

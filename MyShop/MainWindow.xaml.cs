@@ -107,6 +107,8 @@ namespace MyShop
                     var Category_Id = (int)reader["category_id"];
                     var Category_Name = _categories?.FirstOrDefault(c => c.Id == Category_Id)?.Name;
 
+                    var Quantity = (int)reader["quantity"];
+
                     var book = new Book()
                     {
                         Id = Id,
@@ -116,7 +118,8 @@ namespace MyShop
                         Year = Year,
                         Price = Price,
                         Category_Id = Category_Id,
-                        Category_Name = Category_Name
+                        Category_Name = Category_Name,
+                        Quantity = Quantity
                     };
                     _books.Add(book);
 
