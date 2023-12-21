@@ -11,7 +11,7 @@ namespace MyShop.models
     {
         public Book() {}
 
-        public Book(int id, string name, string coverImage, string author, int year, double price, int category_Id, string? category_Name)
+        public Book(int id, string name, string coverImage, string author, int year, double price, int category_Id, string? category_Name, int quantity)
         {
             Id = id;
             Name = name;
@@ -21,6 +21,7 @@ namespace MyShop.models
             Price = price;
             Category_Id = category_Id;
             Category_Name = category_Name;
+            Quantity = quantity;
         }
 
         public int Id { get; set; }
@@ -30,6 +31,7 @@ namespace MyShop.models
         public int Year { get; set; }
         public double Price { get; set; }
         public int Category_Id { get; set; }
+        public int Quantity { get; set; }
 
         public string Category_Name { get; set; }
     }

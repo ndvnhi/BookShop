@@ -46,8 +46,11 @@
 
                         <Image Source="{Binding Cover_Image}" Width="150" Height="200"/>
 
-                        <StackPanel Orientation="Vertical" Margin="20,60,0,0" >
-                            <TextBlock><Run Text="Name: " /><Run Text=" "/><Run Text="{Binding Name}" Foreground="Blue" FontWeight="Bold"/></TextBlock>
+                        <StackPanel Orientation="Vertical" Margin="20,50,0,0" >
+                            <TextBlock>
+                                <Run Text="Name: " /> 
+                                <Run Text="{Binding Name}" Foreground="Blue" FontWeight="Bold"/>
+                            </TextBlock>
 
                             <TextBlock><Run Text="Author: " /><Run Text=" "/><Run Text="{Binding Author}" FontStyle="Italic"/></TextBlock>
 
@@ -56,6 +59,11 @@
                             <TextBlock><Run Text="Price: "/><Run Text=" "/><Run Text="{Binding Price}" FontStyle="Italic"/></TextBlock>
 
                             <TextBlock><Run Text="Category: "/><Run Text=" "/><Run Text="{Binding Category_Name}" FontStyle="Italic"/></TextBlock>
+
+                            <TextBlock>
+                                <Run Text="Quantity: "/>
+                                <Run Text="{Binding Quantity}" FontStyle="Italic"/>
+                            </TextBlock>
 
                         </StackPanel>
 

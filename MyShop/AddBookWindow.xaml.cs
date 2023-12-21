@@ -87,6 +87,7 @@ namespace MyShop
                 int year = int.Parse(txtYear.Text);
                 decimal price = Math.Round(decimal.Parse(txtPrice.Text, CultureInfo.InvariantCulture.NumberFormat), 2);
                 int category = (cmbCategory.SelectedItem as Category)?.Id ?? 0;
+                int quantity = int.Parse(txtQuantity.Text);
 
                 string coverImage = txtCoverImage.Text;
 
@@ -105,13 +106,14 @@ namespace MyShop
                     Author = author,
                     Year = year,
                     Price = (double)price,
-                    Category_Id = category
+                    Category_Id = category,
+                    Quantity = quantity
                 };
 
                 string insert_sql = @"
-                    INSERT INTO MoreBook (name, cover_image, author, year, price, category_id)
+                    INSERT INTO MoreBook (name, cover_image, author, year, price, category_id, quantity)
                     OUTPUT INSERTED.Id
-                    VALUES (@Name, @Cover_Image, @Author, @Year, @Price, @Category_Id);
+                    VALUES (@Name, @Cover_Image, @Author, @Year, @Price, @Category_Id, @Quantity);
                 ";
 
                 using (var command = new SqlCommand(insert_sql, DB.Instance.Connection))
@@ -122,6 +124,7 @@ namespace MyShop
                     command.Parameters.Add("@Year", System.Data.SqlDbType.Int).Value = newBook.Year;
                     command.Parameters.Add("@Price", System.Data.SqlDbType.Decimal).Value = newBook.Price;
                     command.Parameters.Add("@Category_id", System.Data.SqlDbType.Int).Value = newBook.Category_Id;
+                    command.Parameters.Add("@Quantity", System.Data.SqlDbType.Int).Value = newBook.Quantity;
 
                     int newBookId = (int)command.ExecuteScalar();
 
