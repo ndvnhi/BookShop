@@ -5,8 +5,98 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyShop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="470" Width="800" Loaded="Window_Loaded">
 
-    </Grid>
+
+    <Canvas>
+
+        <Label Canvas.Left="603" Canvas.Top="51" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.515,-0.404">List of Books</Label>
+
+        <Label x:Name="totalBooksLabel" Content="Total Books: " Canvas.Left="621" Canvas.Top="94" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.183,1.042" />
+
+        <Label x:Name="Category" Content="Category" Canvas.Left="322" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <ComboBox Name="categoriesComboBox" DisplayMemberPath="Name" SelectionChanged="categoriesComboBox_SelectionChanged" Canvas.Left="380" Canvas.Top="22" HorizontalAlignment="Center" VerticalAlignment="Top" Width="154" ></ComboBox>
+        <Button Content="Clear" Click="ClearSelectionButton_Click" Canvas.Left="534" Canvas.Top="23" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        <Button x:Name="addButton" Width="80" Height="36" Content="Add" Click="addButton_Click" Canvas.Left="640" Canvas.Top="249" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="removeButton" Width="80" Height="36" Content="Remove" Click="removeButton_Click" Canvas.Left="640" Canvas.Top="309" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="editButton" Width="80" Height="36" Content="Edit" Click="editButton_Click" Canvas.Left="640" Canvas.Top="369" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        <TextBox x:Name="keywordTextBox" TextChanged="keywordTextBox_TextChanged" Width="200" Canvas.Left="75" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Label x:Name="NameSearch" Content="Name" Canvas.Left="28" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+
+        <Label x:Name="Min" Content="Price" HorizontalAlignment="Left" Canvas.Left="617" VerticalAlignment="Center" Canvas.Top="141"></Label>
+        <TextBox x:Name="minPriceTextBox" Width="40" Canvas.Left="658" Canvas.Top="145" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Min" RenderTransformOrigin="0.525,-0.276" GotFocus="OnMinPriceTextBoxGotFocus" />
+        <TextBox x:Name="maxPriceTextBox" Width="40" Canvas.Left="703" Canvas.Top="145" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Max" RenderTransformOrigin="0.2,-0.109" GotFocus="OnMaxPriceTextBoxGotFocus" />
+        <Button x:Name="searchByPriceButton" Content="Search by Price" Width="100" Height="20" Canvas.Left="628" Canvas.Top="172" HorizontalAlignment="Left" VerticalAlignment="Top" Click="searchByPriceButton_Click" />
+        <Button Content="Clear Price" Click="ClearPriceButton_Click" Canvas.Left="650" Canvas.Top="200" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
+        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Name="booksListView" SelectedValuePath="Id" Width="540" Height="317" Canvas.Left="28" Canvas.Top="51" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=5}">
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="200" >
+                        <Image Source="{Binding Cover_Image}" Width="150" Height="200"/>
+
+                        <StackPanel Orientation="Vertical" Margin="20,60,0,0" >
+                            <TextBlock>
+                                <Run Text="Name: " /> 
+                                <Run Text="{Binding Name}" Foreground="Blue" FontWeight="Bold"/>
+                            </TextBlock>
+
+                            <TextBlock> 
+                                <Run Text="Author: " /> 
+                                <Run Text="{Binding Author}" FontStyle="Italic"/>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run Text="Published Year: "/>
+                                <Run Text="{Binding Year}" FontStyle="Italic"/>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run Text="Price: "/>
+                                <Run Text="{Binding Price}" FontStyle="Italic"/>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run Text="Category: "/>
+                                <Run Text="{Binding Category_Name}" FontStyle="Italic"/>
+                            </TextBlock>
+
+                        </StackPanel>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ComboBox Name="pagingComboBox" Width="50" Canvas.Left="403" Canvas.Top="389" SelectionChanged="pagingComboBox_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <Run Text="{Binding Page, Mode=OneTime}"/>/<Run Text="{Binding Total, Mode=OneTime}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button x:Name="previousButton" Width="80" Height="34" Content="Previous" Canvas.Left="303" Canvas.Top="383" Click="previousButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button x:Name="nextButton" Width="80" Height="34" Content="Next" Canvas.Left="474" Canvas.Top="383" HorizontalAlignment="Left" VerticalAlignment="Center" Click="nextButton_Click" RenderTransformOrigin="-0.481,0.486"/>
+
+        <Label x:Name="NoBooks" Content="Books/Page" Canvas.Left="100" Canvas.Top="387"></Label>
+        <ComboBox x:Name="booksPerPageComboBox" SelectedIndex="1" SelectionChanged="booksPerPageComboBox_SelectionChanged" Canvas.Left="180" Canvas.Top="389" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <ComboBoxItem Content="3"/>
+            <ComboBoxItem Content="5"/>
+            <ComboBoxItem Content="10"/>
+        </ComboBox>
+
+    </Canvas>
 </Window>

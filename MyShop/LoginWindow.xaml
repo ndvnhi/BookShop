@@ -1,0 +1,23 @@
+﻿<Window x:Class="MyShop.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyShop"
+        mc:Ignorable="d"
+        Title="BookStore Login" Height="350" Width="300" Loaded="Window_Loaded">
+    <Canvas>
+        <TextBlock Text="Login" FontSize="25" FontWeight="DemiBold" Canvas.Left="118" Canvas.Top="22" HorizontalAlignment="Center" VerticalAlignment="Top"  ></TextBlock>
+
+        <TextBlock Text="Username:" Canvas.Left="58" Canvas.Top="63"/>
+        <TextBox x:Name="userNameTextBox" Width="182" Height="35" Canvas.Left="59" Canvas.Top="84" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock Text="Password:" Canvas.Left="58" Canvas.Top="133" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="passwordBox" Width="182" Height="35" Canvas.Left="59" Canvas.Top="154" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="loginButton" Width="80" Height="35" Content="Login" Click="loginButton_Click" Canvas.Left="110" Canvas.Top="227" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <CheckBox x:Name="rememberMe" Content="Remember me" Canvas.Left="101" Canvas.Top="194" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <ProgressBar x:Name="loading" Width="100" Height="10" Canvas.Left="100" Canvas.Top="267" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+    </Canvas>
+</Window>
