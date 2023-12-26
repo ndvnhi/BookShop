@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using MyShop.DAO;
 using MyShop.models;
 using System;
 using System.Collections.Generic;
@@ -29,13 +30,13 @@ namespace MyShop
         private List<Category> _categories;
         private MainWindow _mainWindow;
 
-        public EditBookWindow(Book book, MainWindow mainWindow)
+        public EditBookWindow(Book book)
         {
             InitializeComponent();
             _currentBook = book;
-            _mainWindow = mainWindow;
+            //_mainWindow = mainWindow;
 
-            _categories = mainWindow.GetCategoriesFromDatabase();
+            _categories = CategoryDAO.GetCategories(DB.Instance.ConnectionString);
             cmbCategory.ItemsSource = _categories;
             cmbCategory.DisplayMemberPath = "Name";
             cmbCategory.SelectedValuePath = "Id";
@@ -165,41 +166,11 @@ namespace MyShop
 
         private void UpdateBookInDatabase(Book book)
         {
-            try
+            bool success = BookDAO.UpdateBook(book, DB.Instance.ConnectionString);
+
+            if (!success)
             {
-                using (var connection = new SqlConnection(DB.Instance.ConnectionString))
-                {
-                    connection.Open();
-
-                    string update_sql = @"
-                        UPDATE MoreBook 
-                        SET name = @Name, cover_image = @Cover_Image, author = @Author, year = @Year, price = @Price, category_id = @Category_Id, quantity = @Quantity 
-                        WHERE id = @Id";
-                    using (var command = new SqlCommand(update_sql, connection))
-                    {
-                        command.Parameters.Add("@Name", System.Data.SqlDbType.Text).Value = book.Name;
-                        command.Parameters.Add("@Cover_Image", System.Data.SqlDbType.Text).Value = book.Cover_Image;
-                        command.Parameters.Add("@Author", System.Data.SqlDbType.Text).Value = book.Author;
-                        command.Parameters.Add("@Year", System.Data.SqlDbType.Int).Value = book.Year;
-                        command.Parameters.Add("@Price", System.Data.SqlDbType.Decimal).Value = book.Price; // Use decimal type
-
-                        command.Parameters.Add("@Category_Id", System.Data.SqlDbType.Int).Value = book.Category_Id;
-                        command.Parameters.Add("@Quantity", System.Data.SqlDbType.Int).Value = book.Quantity;
-
-                        command.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = book.Id;
-
-                        int rowsAffected = command.ExecuteNonQuery();
-
-                        if (rowsAffected <= 0)
-                        {
-                            MessageBox.Show($"Failed to update book '{book.Name}' in the database.");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error updating book in the database: {ex.Message}");
+                MessageBox.Show($"Failed to update book '{book.Name}' in the database.");
             }
         }
 

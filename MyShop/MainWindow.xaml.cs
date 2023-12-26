@@ -180,39 +180,10 @@ namespace MyShop
         }
 
 
-
-        // get category
-        public List<Category> GetCategoriesFromDatabase()
-        {
-            List<Category> categories = new List<Category>();
-
-            using (var connection = new SqlConnection(DB.Instance.ConnectionString))
-            {
-                connection.Open();
-
-                string select_sql = "SELECT id, name FROM Category";
-                using (var command = new SqlCommand(select_sql, connection))
-                {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            int categoryId = reader.GetInt32(0);
-                            string categoryName = reader.GetString(1);
-
-                            categories.Add(new Category { Id = categoryId, Name = categoryName });
-                        }
-                    }
-                }
-            }
-
-            return categories;
-        }
-
         // category
         private void LoadCategories()
         {
-            _categories = GetCategoriesFromDatabase();
+            _categories = CategoryDAO.GetCategories(DB.Instance.ConnectionString);
 
             categoriesComboBox.ItemsSource = _categories;
         }
@@ -237,7 +208,7 @@ namespace MyShop
         // add new book
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            var addBookWindow = new AddBookWindow(_books, this);
+            var addBookWindow = new AddBookWindow(_books);
             addBookWindow.ShowDialog();
             booksListView.Items.Refresh();
             LoadAllBooks();
@@ -248,31 +219,24 @@ namespace MyShop
         {
             try
             {
-                using (var connection = new SqlConnection(DB.Instance.ConnectionString))
+                bool success = BookDAO.RemoveBook(bookId, DB.Instance.ConnectionString);
+
+                if (success)
                 {
-                    connection.Open();
-
-                    string delete_sql = "DELETE FROM MoreBook WHERE id = @Id";
-                    using (var command = new SqlCommand(delete_sql, connection))
-                    {
-                        command.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = bookId;
-
-                        int rowsAffected = command.ExecuteNonQuery();
-
-                        if (rowsAffected <= 0)
-                        {
-                            MessageBox.Show($"Failed to remove book from the database.");
-                        }
-                    }
+                    MessageBox.Show($"Book with ID '{bookId}' removed successfully.");
+                }
+                else
+                {
+                    MessageBox.Show($"Failed to remove book with ID '{bookId}' from the database.");
                 }
             }
-            catch (SqlException sqlEx)
+            catch (ApplicationException appEx)
             {
-                MessageBox.Show($"SQL Error removing book from the database: {sqlEx.Message}");
+                MessageBox.Show($"Error removing book from the database: {appEx.Message}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error removing book from the database: {ex.ToString()}");
+                MessageBox.Show($"Unexpected error: {ex.Message}");
             }
         }
 
@@ -293,7 +257,6 @@ namespace MyShop
                 {
                     RemoveBookFromDatabase(selectedBook.Id);
                     _books.Remove(selectedBook);
-                    MessageBox.Show($"Book with ID '{selectedBook.Id}' removed successfully.");
                     booksListView.Items.Refresh();
                     LoadAllBooks();
                 }
@@ -315,7 +278,7 @@ namespace MyShop
 
                 if (selectedBook != null)
                 {
-                    var editBookWindow = new EditBookWindow(selectedBook, this);
+                    var editBookWindow = new EditBookWindow(selectedBook);
                     editBookWindow.ShowDialog();
                 }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using MyShop.DAO;
 using MyShop.models;
 using System;
 using System.Collections.Generic;
@@ -29,13 +30,14 @@ namespace MyShop
         private List<Category> _categories;
         private MainWindow _mainWindow;
 
-        public AddBookWindow(BindingList<Book> books, MainWindow mainWindow)
+        public AddBookWindow(BindingList<Book> books)
         {
             InitializeComponent();
             _books = books;
-            _mainWindow = mainWindow;
+            //_mainWindow = mainWindow;
 
-            _categories = mainWindow.GetCategoriesFromDatabase();
+            //_categories = mainWindow.GetCategoriesFromDatabase();
+            _categories = CategoryDAO.GetCategories(DB.Instance.ConnectionString);
             cmbCategory.ItemsSource = _categories;
             cmbCategory.DisplayMemberPath = "Name";
         }
@@ -110,36 +112,19 @@ namespace MyShop
                     Quantity = quantity
                 };
 
-                string insert_sql = @"
-                    INSERT INTO MoreBook (name, cover_image, author, year, price, category_id, quantity)
-                    OUTPUT INSERTED.Id
-                    VALUES (@Name, @Cover_Image, @Author, @Year, @Price, @Category_Id, @Quantity);
-                ";
+                int newBookId = BookDAO.AddBook(newBook, DB.Instance.ConnectionString);
 
-                using (var command = new SqlCommand(insert_sql, DB.Instance.Connection))
+                if (newBookId > 0)
                 {
-                    command.Parameters.Add("@Name", System.Data.SqlDbType.Text).Value = newBook.Name;
-                    command.Parameters.Add("@Cover_Image", System.Data.SqlDbType.Text).Value = newBook.Cover_Image;
-                    command.Parameters.Add("@Author", System.Data.SqlDbType.Text).Value = newBook.Author;
-                    command.Parameters.Add("@Year", System.Data.SqlDbType.Int).Value = newBook.Year;
-                    command.Parameters.Add("@Price", System.Data.SqlDbType.Decimal).Value = newBook.Price;
-                    command.Parameters.Add("@Category_id", System.Data.SqlDbType.Int).Value = newBook.Category_Id;
-                    command.Parameters.Add("@Quantity", System.Data.SqlDbType.Int).Value = newBook.Quantity;
+                    newBook.Id = newBookId;
+                    _books.Add(newBook);
+                    MessageBox.Show($"Insert successful for book: {newBook.Name}, ID: {newBookId}");
 
-                    int newBookId = (int)command.ExecuteScalar();
-
-                    if (newBookId > 0)
-                    {
-                        newBook.Id = newBookId;
-                        _books.Add(newBook);
-                        MessageBox.Show($"Insert successful for book: {newBook.Name}, ID: {newBookId}");
-
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Insert failed. No rows affected.");
-                    }
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Insert failed. No rows affected.");
                 }
             }
             catch (Exception ex)
