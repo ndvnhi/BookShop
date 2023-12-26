@@ -341,5 +341,10 @@ namespace MyShop
             }
         }
 
+        private void catButton_Click(object sender, RoutedEventArgs e)
+        {
+            var categoryWindow = new CategoryWindow();
+            categoryWindow.ShowDialog();
+        }
     }
 }

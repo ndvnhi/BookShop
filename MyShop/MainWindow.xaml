@@ -91,6 +91,7 @@
             <ComboBoxItem Content="5"/>
             <ComboBoxItem Content="10"/>
         </ComboBox>
+        <Button x:Name="catButton" Width="80" Height="36" Content="Category" Click="catButton_Click" Canvas.Left="640" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
     </Canvas>
 </Window>

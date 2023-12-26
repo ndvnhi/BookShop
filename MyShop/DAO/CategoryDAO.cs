@@ -2,6 +2,7 @@
 using MyShop.models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,104 @@ namespace MyShop.DAO
             }
 
             return categories;
+        }
+
+        public static int AddCategory(Category newCategory, string connectionString)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string insertSql = @"
+                        INSERT INTO Category (name)
+                        OUTPUT INSERTED.Id
+                        VALUES (@Name);
+                    ";
+
+                    using (var command = new SqlCommand(insertSql, connection))
+                    {
+                        command.Parameters.Add("@Name", SqlDbType.Text).Value = newCategory.Name;
+
+                        int newCategoryId = (int)command.ExecuteScalar();
+
+                        return newCategoryId;
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException($"SQL Error adding category: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error adding category: {ex.Message}");
+            }
+        }
+
+        public static bool UpdateCategory(Category updatedCategory, string connectionString)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string updateSql = @"
+                        UPDATE Category 
+                        SET name = @Name
+                        WHERE id = @Id
+                    ";
+
+                    using (var command = new SqlCommand(updateSql, connection))
+                    {
+                        command.Parameters.Add("@Name", SqlDbType.Text).Value = updatedCategory.Name;
+                        command.Parameters.Add("@Id", SqlDbType.Int).Value = updatedCategory.Id;
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException($"SQL Error updating category: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error updating category: {ex.Message}");
+            }
+        }
+
+        public static bool RemoveCategory(int categoryId, string connectionString)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string deleteSql = "DELETE FROM Category WHERE id = @Id";
+                    using (var command = new SqlCommand(deleteSql, connection))
+                    {
+                        command.Parameters.Add("@Id", SqlDbType.Int).Value = categoryId;
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException($"SQL Error removing category: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error removing category: {ex.Message}");
+            }
         }
     }
 }
