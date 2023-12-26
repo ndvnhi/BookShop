@@ -345,6 +345,7 @@ namespace MyShop
         {
             var categoryWindow = new CategoryWindow();
             categoryWindow.ShowDialog();
+            LoadCategories();
         }
     }
 }

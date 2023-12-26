@@ -136,7 +136,7 @@ namespace MyShop
 
                         if (updateSuccessful)
                         {
-                            MessageBox.Show($"Category '{_selectedCategory.Name}' updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show($"Updated category '{_selectedCategory.Name}' to '{updatedCategoryName}' successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                             LoadCategories();
                         }
