@@ -6,13 +6,14 @@ using System.ComponentModel;
 using System.Data;
 using MyShop.models;
 using MyShop.DAO;
+using Fluent;
 
 namespace MyShop
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Fluent.RibbonWindow
     {
         BindingList<Book> _books;
         List<Category> _categories;
@@ -325,7 +326,7 @@ namespace MyShop
 
         private void OnMinPriceTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
+            System.Windows.Controls.TextBox textBox = (System.Windows.Controls.TextBox)sender;
             if (textBox.Text == "Min")
             {
                 textBox.Text = "";
@@ -334,7 +335,7 @@ namespace MyShop
 
         private void OnMaxPriceTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
+            System.Windows.Controls.TextBox textBox = (System.Windows.Controls.TextBox)sender;
             if (textBox.Text == "Max")
             {
                 textBox.Text = "";
@@ -346,6 +347,17 @@ namespace MyShop
             var categoryWindow = new CategoryWindow();
             categoryWindow.ShowDialog();
             LoadCategories();
+        }
+
+        private void BackstageTabItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void dashboard_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var dashboard = new Dashboard();
+            dashboard.Show();
         }
     }
 }

@@ -165,5 +165,41 @@ namespace MyShop.DAO
             cmd.Parameters.Add("@MaxPrice", SqlDbType.Decimal).Value = max;
             return cmd.ExecuteReader();
         }
+        public static SqlDataReader getTotalBooks()
+        {
+            SqlCommand cmd;
+            var sql = @"
+                    SELECT *, COUNT(*) OVER() AS Total
+                    FROM MoreBook
+                    ";
+
+            cmd = new SqlCommand(sql, DB.Instance.Connection);
+            return cmd.ExecuteReader();
+        }
+        public static SqlDataReader getAlmostSoldOutBooks()
+        {
+            SqlCommand cmd;
+            var sql = @"
+                    SELECT *, COUNT(*) OVER() AS Result
+                    FROM MoreBook
+                    WHERE quantity < 6
+                    ";
+
+            cmd = new SqlCommand(sql, DB.Instance.Connection);
+            return cmd.ExecuteReader();
+        }
+        public static SqlDataReader getInStockBooks()
+        {
+            SqlCommand cmd;
+            var sql = @"
+                    select cate.name as TheLoai, sum(quantity) as SoLuong
+                    from Category cate, MoreBook
+                    where cate.id = MoreBook.category_id
+                    group by cate.name
+                    ";
+
+            cmd = new SqlCommand(sql, DB.Instance.Connection);
+            return cmd.ExecuteReader();
+        }
     }
 }
