@@ -13,7 +13,7 @@
             <Fluent:Ribbon.Menu>
                 <Fluent:Backstage Header="Edit">
                     <Fluent:BackstageTabControl>
-                        <Fluent:BackstageTabItem Header="Dashboard"/>
+                        <Fluent:BackstageTabItem Header="Home" />
                         <Fluent:BackstageTabItem Header="Exit" MouseDown="BackstageTabItem_MouseDown"></Fluent:BackstageTabItem>
                     </Fluent:BackstageTabControl>
                 </Fluent:Backstage>

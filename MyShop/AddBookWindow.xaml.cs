@@ -112,7 +112,7 @@ namespace MyShop
                     Quantity = quantity
                 };
 
-                int newBookId = BookDAO.AddBook(newBook, DB.Instance.ConnectionString);
+                int newBookId = BookDAO.AddBook(newBook);
 
                 if (newBookId > 0)
                 {

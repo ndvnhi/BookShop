@@ -361,6 +361,12 @@ namespace MyShop
             dashboard.Show();
         }
 
+        private void invoice_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var invoices = new Invoice_Management();
+            invoices.Show();
+        }
+
         private void logout_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             // disconnect from database
