@@ -7,13 +7,13 @@
         xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
         xmlns:local="clr-namespace:MyShop"
         mc:Ignorable="d"
-        Title="Dashboard" Height="450" Width="800">
+        Title="Dashboard" Height="450" Width="800" Closing="RibbonWindow_Closing">
     <DockPanel LastChildFill="True">
         <Fluent:Ribbon DockPanel.Dock="Top" Height="50" Width="800">
             <Fluent:Ribbon.Menu>
                 <Fluent:Backstage Header="Edit">
                     <Fluent:BackstageTabControl>
-                        <Fluent:BackstageTabItem Header="Home" />
+                        <Fluent:BackstageTabItem Header="Home" MouseDown="Home_click"/>
                         <Fluent:BackstageTabItem Header="Exit" MouseDown="BackstageTabItem_MouseDown"></Fluent:BackstageTabItem>
                     </Fluent:BackstageTabControl>
                 </Fluent:Backstage>

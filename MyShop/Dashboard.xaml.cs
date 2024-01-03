@@ -9,6 +9,7 @@ using MyShop.DAO;
 using MyShop.models;
 using LiveCharts.Wpf;
 using LiveCharts;
+using System.Configuration;
 
 namespace MyShop
 {
@@ -137,6 +138,22 @@ namespace MyShop
         private void BackstageTabItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void RibbonWindow_Closing(object sender, CancelEventArgs e)
+        {
+            var lastScreen = this.GetType().Name;
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings["LastScreen"].Value = lastScreen;
+            config.Save(ConfigurationSaveMode.Minimal);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        private void Home_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var MainWindow = new MainWindow();
+            MainWindow.Show();
+            this.Close();
         }
     }
 }
