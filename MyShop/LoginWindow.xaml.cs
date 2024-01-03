@@ -57,7 +57,8 @@ namespace MyShop
             loading.IsIndeterminate = true;
 
             var builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "DESKTOP-L8CQC2S";
+            //builder.DataSource = "DESKTOP-L8CQC2S";
+            builder.DataSource = "CLOUD";
             builder.InitialCatalog = "BookDB";
             builder.UserID = username;
             builder.Password = password;
