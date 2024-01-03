@@ -359,5 +359,11 @@ namespace MyShop
             var dashboard = new Dashboard();
             dashboard.Show();
         }
+
+        private void invoice_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var invoices = new Invoice_Management();
+            invoices.Show();
+        }
     }
 }
