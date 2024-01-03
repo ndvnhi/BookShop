@@ -25,7 +25,7 @@
         <Canvas>
             <Label Canvas.Left="640" Canvas.Top="51" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.515,-0.404" Foreground="#3E8DCC">Invoice</Label>
 
-            <Button x:Name="addButton" Width="80" Height="36" Content="Create" Canvas.Left="645" Canvas.Top="99" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#01BEA4" Foreground="White" RenderTransformOrigin="0.562,-2.124">
+            <Button x:Name="addButton" Click="addButton_Click" Width="80" Height="36" Content="Create" Canvas.Left="645" Canvas.Top="99" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#01BEA4" Foreground="White" RenderTransformOrigin="0.562,-2.124">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>
