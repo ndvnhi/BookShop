@@ -221,7 +221,7 @@ namespace MyShop
         {
             try
             {
-                bool success = BookDAO.RemoveBook(bookId, DB.Instance.ConnectionString);
+                bool success = BookDAO.RemoveBook(bookId);
 
                 if (success)
                 {

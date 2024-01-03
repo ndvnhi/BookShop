@@ -166,7 +166,7 @@ namespace MyShop
 
         private void UpdateBookInDatabase(Book book)
         {
-            bool success = BookDAO.UpdateBook(book, DB.Instance.ConnectionString);
+            bool success = BookDAO.UpdateBook(book);
 
             if (!success)
             {

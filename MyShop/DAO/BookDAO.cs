@@ -13,34 +13,30 @@ namespace MyShop.DAO
 {
     internal class BookDAO
     {
-        public static int AddBook(Book newBook, string connectionString)
+        public static int AddBook(Book newBook)
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string insertSql = @"
+                string insertSql = @"
                         INSERT INTO MoreBook (name, cover_image, author, year, price, category_id, quantity)
                         OUTPUT INSERTED.Id
                         VALUES (@Name, @Cover_Image, @Author, @Year, @Price, @Category_Id, @Quantity);
                     ";
 
-                    using (var command = new SqlCommand(insertSql, connection))
-                    {
-                        command.Parameters.Add("@Name", System.Data.SqlDbType.Text).Value = newBook.Name;
-                        command.Parameters.Add("@Cover_Image", System.Data.SqlDbType.Text).Value = newBook.Cover_Image;
-                        command.Parameters.Add("@Author", System.Data.SqlDbType.Text).Value = newBook.Author;
-                        command.Parameters.Add("@Year", System.Data.SqlDbType.Int).Value = newBook.Year;
-                        command.Parameters.Add("@Price", System.Data.SqlDbType.Decimal).Value = newBook.Price;
-                        command.Parameters.Add("@Category_Id", System.Data.SqlDbType.Int).Value = newBook.Category_Id;
-                        command.Parameters.Add("@Quantity", System.Data.SqlDbType.Int).Value = newBook.Quantity;
+                using (var command = new SqlCommand(insertSql, LoginWindow.connection))
+                {
+                    command.Parameters.Add("@Name", System.Data.SqlDbType.Text).Value = newBook.Name;
+                    command.Parameters.Add("@Cover_Image", System.Data.SqlDbType.Text).Value = newBook.Cover_Image;
+                    command.Parameters.Add("@Author", System.Data.SqlDbType.Text).Value = newBook.Author;
+                    command.Parameters.Add("@Year", System.Data.SqlDbType.Int).Value = newBook.Year;
+                    command.Parameters.Add("@Price", System.Data.SqlDbType.Decimal).Value = newBook.Price;
+                    command.Parameters.Add("@Category_Id", System.Data.SqlDbType.Int).Value = newBook.Category_Id;
+                    command.Parameters.Add("@Quantity", System.Data.SqlDbType.Int).Value = newBook.Quantity;
 
-                        int newBookId = (int)command.ExecuteScalar();
+                    int newBookId = (int)command.ExecuteScalar();
 
-                        return newBookId;
-                    }
+                    return newBookId;
+
                 }
             }
             catch (SqlException sqlEx)
@@ -53,34 +49,29 @@ namespace MyShop.DAO
             }
         }
 
-        public static bool UpdateBook(Book updatedBook, string connectionString)
+        public static bool UpdateBook(Book updatedBook)
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string updateSql = @"
+                string updateSql = @"
                     UPDATE MoreBook 
                     SET name = @Name, cover_image = @Cover_Image, author = @Author, year = @Year, price = @Price, category_id = @Category_Id, quantity = @Quantity 
                     WHERE id = @Id";
 
-                    using (var command = new SqlCommand(updateSql, connection))
-                    {
-                        command.Parameters.Add("@Name", SqlDbType.Text).Value = updatedBook.Name;
-                        command.Parameters.Add("@Cover_Image", SqlDbType.Text).Value = updatedBook.Cover_Image;
-                        command.Parameters.Add("@Author", SqlDbType.Text).Value = updatedBook.Author;
-                        command.Parameters.Add("@Year", SqlDbType.Int).Value = updatedBook.Year;
-                        command.Parameters.Add("@Price", SqlDbType.Decimal).Value = updatedBook.Price;
-                        command.Parameters.Add("@Category_Id", SqlDbType.Int).Value = updatedBook.Category_Id;
-                        command.Parameters.Add("@Quantity", SqlDbType.Int).Value = updatedBook.Quantity;
-                        command.Parameters.Add("@Id", SqlDbType.Int).Value = updatedBook.Id;
+                using (var command = new SqlCommand(updateSql, LoginWindow.connection))
+                {
+                    command.Parameters.Add("@Name", SqlDbType.Text).Value = updatedBook.Name;
+                    command.Parameters.Add("@Cover_Image", SqlDbType.Text).Value = updatedBook.Cover_Image;
+                    command.Parameters.Add("@Author", SqlDbType.Text).Value = updatedBook.Author;
+                    command.Parameters.Add("@Year", SqlDbType.Int).Value = updatedBook.Year;
+                    command.Parameters.Add("@Price", SqlDbType.Decimal).Value = updatedBook.Price;
+                    command.Parameters.Add("@Category_Id", SqlDbType.Int).Value = updatedBook.Category_Id;
+                    command.Parameters.Add("@Quantity", SqlDbType.Int).Value = updatedBook.Quantity;
+                    command.Parameters.Add("@Id", SqlDbType.Int).Value = updatedBook.Id;
 
-                        int rowsAffected = command.ExecuteNonQuery();
+                    int rowsAffected = command.ExecuteNonQuery();
 
-                        return rowsAffected > 0;
-                    }
+                    return rowsAffected > 0;
                 }
             }
             catch (SqlException sqlEx)
@@ -95,23 +86,18 @@ namespace MyShop.DAO
             }
         }
 
-        public static bool RemoveBook(int bookId, string connectionString)
+        public static bool RemoveBook(int bookId)
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                string deleteSql = "DELETE FROM MoreBook WHERE id = @Id";
+                using (var command = new SqlCommand(deleteSql, LoginWindow.connection))
                 {
-                    connection.Open();
+                    command.Parameters.Add("@Id", SqlDbType.Int).Value = bookId;
 
-                    string deleteSql = "DELETE FROM MoreBook WHERE id = @Id";
-                    using (var command = new SqlCommand(deleteSql, connection))
-                    {
-                        command.Parameters.Add("@Id", SqlDbType.Int).Value = bookId;
+                    int rowsAffected = command.ExecuteNonQuery();
 
-                        int rowsAffected = command.ExecuteNonQuery();
-
-                        return rowsAffected > 0;
-                    }
+                    return rowsAffected > 0;
                 }
             }
             catch (SqlException sqlEx)
