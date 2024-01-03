@@ -24,6 +24,7 @@ namespace MyShop
     /// </summary>
     public partial class LoginWindow : Window
     {
+        public static SqlConnection connection;
         public LoginWindow()
         {
             InitializeComponent();
@@ -49,15 +50,10 @@ namespace MyShop
             }
         }
 
-        public async void loginButton_Click(object sender, RoutedEventArgs e)
+        public static string connString(string username, string password)
         {
-            string username = userNameTextBox.Text;
-            string password = passwordBox.Password;
-
-            loading.IsIndeterminate = true;
-
             var builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "DESKTOP-L8CQC2S";
+            builder.DataSource = ConfigurationManager.AppSettings["Server"];
             builder.InitialCatalog = "BookDB";
             builder.UserID = username;
             builder.Password = password;
@@ -65,9 +61,20 @@ namespace MyShop
 
             string connectionString = builder.ConnectionString;
 
+            return connectionString;
+        }
+
+        public async void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            string username = userNameTextBox.Text;
+            string password = passwordBox.Password;
+
+            loading.IsIndeterminate = true;
+            string connectionString = connString(username, password);
+
             try
             {
-                var connection = new SqlConnection(connectionString);
+                connection = new SqlConnection(connectionString);
 
                 await connection.OpenAsync();
 
@@ -108,5 +115,13 @@ namespace MyShop
             }
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var lastScreen = this.GetType().Name;
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings["LastScreen"].Value = lastScreen;
+            config.Save(ConfigurationSaveMode.Minimal);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
     }
 }

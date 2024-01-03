@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyShop"
         mc:Ignorable="d"
-        Title="BookStore Login" Height="350" Width="300" Loaded="Window_Loaded">
+        Title="BookStore Login" Height="350" Width="300" Loaded="Window_Loaded" Closing="Window_Closing">
     <Canvas>
         <TextBlock Text="Login" FontSize="25" FontWeight="DemiBold" Canvas.Left="118" Canvas.Top="22" HorizontalAlignment="Center" VerticalAlignment="Top"  ></TextBlock>
 

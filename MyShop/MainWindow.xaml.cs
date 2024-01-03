@@ -7,6 +7,7 @@ using System.Data;
 using MyShop.models;
 using MyShop.DAO;
 using Fluent;
+using System.Configuration;
 
 namespace MyShop
 {
@@ -358,6 +359,24 @@ namespace MyShop
         {
             var dashboard = new Dashboard();
             dashboard.Show();
+        }
+
+        private void logout_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // disconnect from database
+            LoginWindow.connection.Close();
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+        }
+
+        private void RibbonWindow_Closing(object sender, CancelEventArgs e)
+        {
+            var lastScreen = this.GetType().Name;
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings["LastScreen"].Value = lastScreen;
+            config.Save(ConfigurationSaveMode.Minimal);
+            ConfigurationManager.RefreshSection("appSettings");
         }
     }
 }
