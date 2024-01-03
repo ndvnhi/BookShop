@@ -15,6 +15,7 @@
                 <Fluent:Backstage Header="Edit">
                     <Fluent:BackstageTabControl>
                         <Fluent:BackstageTabItem Header="Dashboard" MouseDown="dashboard_click"/>
+                        <Fluent:BackstageTabItem Header="Invoice" MouseDown="invoice_click"/>
                         <Fluent:BackstageTabItem Header="Exit" MouseDown="BackstageTabItem_MouseDown"></Fluent:BackstageTabItem>
                     </Fluent:BackstageTabControl>
                 </Fluent:Backstage>
