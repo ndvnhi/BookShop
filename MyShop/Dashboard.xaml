@@ -37,6 +37,7 @@
             <Grid>
                 <lvc:CartesianChart x:Name="ColumnChart" Margin="10,6,10,139" RenderTransformOrigin="0.499,1" Height="110">
                 </lvc:CartesianChart>
+                <StackPanel/>
             </Grid>
         </StackPanel>
     </DockPanel>

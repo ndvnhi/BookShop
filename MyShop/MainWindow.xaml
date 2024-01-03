@@ -6,7 +6,7 @@
         xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
         xmlns:local="clr-namespace:MyShop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" Loaded="Window_Loaded">
+        Title="MainWindow" Height="500" Width="800" Loaded="Window_Loaded" Closing="RibbonWindow_Closing">
 
 
     <DockPanel LastChildFill="True">
@@ -15,6 +15,7 @@
                 <Fluent:Backstage Header="Edit">
                     <Fluent:BackstageTabControl>
                         <Fluent:BackstageTabItem Header="Dashboard" MouseDown="dashboard_click"/>
+                        <Fluent:BackstageTabItem Header="Logout" MouseDown="logout_click"/>
                         <Fluent:BackstageTabItem Header="Invoice" MouseDown="invoice_click"/>
                         <Fluent:BackstageTabItem Header="Exit" MouseDown="BackstageTabItem_MouseDown"></Fluent:BackstageTabItem>
                     </Fluent:BackstageTabControl>
@@ -165,6 +166,14 @@
             </ComboBox>
             <Button x:Name="catButton" Width="80" Height="36" Content="Category" Click="catButton_Click" Canvas.Left="640" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Canvas>
+        <TabControl Width="100">
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
 
 
     </DockPanel>
