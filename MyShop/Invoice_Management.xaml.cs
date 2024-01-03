@@ -245,5 +245,11 @@ namespace MyShop
             ReloadInvoices();
 
         }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            var addInvoiceWindow = new AddInvoice();
+            addInvoiceWindow.ShowDialog();
+        }
     }
 }
