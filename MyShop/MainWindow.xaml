@@ -101,6 +101,10 @@
                                                 <Setter TargetName="ItemBorder" Property="BorderBrush" Value="Red" />
                                                 <Setter TargetName="ItemBorder" Property="Background" Value="LightCoral" />
                                             </Trigger>
+
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="ItemBorder" Property="Cursor" Value="Hand" />
+                                            </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
