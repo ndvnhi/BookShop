@@ -58,7 +58,7 @@
                         </Button.Resources>
                     </Button>
 
-                    <Button x:Name="catButton" Margin="30 0 0 0" Width="80" Height="25" Content="Edit Category" Click="catButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Background="MidnightBlue" Foreground="White"/>
+                    <Button x:Name="catButton" Margin="30 0 0 0" Width="80" Height="25" Content="Edit Category" Click="catButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Background="PaleVioletRed"  Foreground="White"/>
 
                 </StackPanel>
 
@@ -86,6 +86,24 @@
                     <ListView.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border x:Name="ItemBorder" BorderBrush="CornflowerBlue"  BorderThickness="1" CornerRadius="10" Background="{TemplateBinding Background}">
+                                            <ContentPresenter/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="Red" />
+                                                <Setter TargetName="ItemBorder" Property="Background" Value="LightCoral" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
                     </ListView.Resources>
 
@@ -150,22 +168,24 @@
 
 
             <DockPanel Grid.Column="1" x:Name="bookDetailsDockPanel">
-                <Label DockPanel.Dock="Top" Margin="0 80 0 0"
+                <Label DockPanel.Dock="Top" Margin="0 50 0 0"
                        x:Name="BookDetail" Content="Book Detail" 
                        Height="30" FontWeight="Bold" Padding="3" Foreground="#007acc"
                        FontSize="20" FontFamily="Times" FontStretch="Medium"
                        HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
 
-                <StackPanel DockPanel.Dock="Top" Margin="20 0 20 0">
-                    <Image x:Name="BookDetailImage" Source="{Binding Cover_Image}" Width="150" Height="200"/>
+                <Border  DockPanel.Dock="Top"  BorderBrush="CornflowerBlue" BorderThickness="2" CornerRadius="10" Height="320" Margin="0 0 10 0">
+                    <StackPanel Margin="10 0 10 0">
+                        <Image x:Name="BookDetailImage" Source="{Binding Cover_Image}" Width="150" Height="200"/>
 
-                    <TextBlock x:Name="BookName" TextWrapping="Wrap"> <Run Text="Name: " /><Run Text="{Binding Name}"  Foreground="Blue" FontWeight="Bold"></Run></TextBlock>
-                    <TextBlock x:Name="BookAuthor"><Run Text="Author: " /><Run Text="{Binding Author}" FontStyle="Italic"></Run></TextBlock>
-                    <TextBlock x:Name="BookYear"><Run Text="Published Year: "/><Run Text="{Binding Year}" FontStyle="Italic"></Run></TextBlock>
-                    <TextBlock x:Name="BookPrice"> <Run Text="Price: "/><Run Text="{Binding Price}" FontStyle="Italic"/></TextBlock>
-                    <TextBlock x:Name="BookCategory"><Run Text="Category: "/><Run Text="{Binding Category_Name}" FontStyle="Italic"/></TextBlock>
-                    <TextBlock x:Name="BookQuantity"><Run Text="Quantity: "/><Run Text="{Binding Quantity}" FontStyle="Italic"/></TextBlock>
-                </StackPanel>
+                        <TextBlock x:Name="BookName" TextWrapping="Wrap"> <Run Text="Name: " /><Run Text="{Binding Name}"  Foreground="Blue" FontWeight="Bold"></Run></TextBlock>
+                        <TextBlock x:Name="BookAuthor"><Run Text="Author: " /><Run Text="{Binding Author}" FontStyle="Italic"></Run></TextBlock>
+                        <TextBlock x:Name="BookYear"><Run Text="Published Year: "/><Run Text="{Binding Year}" FontStyle="Italic"></Run></TextBlock>
+                        <TextBlock x:Name="BookPrice"> <Run Text="Price: "/><Run Text="{Binding Price}" FontStyle="Italic"/></TextBlock>
+                        <TextBlock x:Name="BookCategory"><Run Text="Category: "/><Run Text="{Binding Category_Name}" FontStyle="Italic"/></TextBlock>
+                        <TextBlock x:Name="BookQuantity"><Run Text="Quantity: "/><Run Text="{Binding Quantity}" FontStyle="Italic"/></TextBlock>
+                    </StackPanel>
+                </Border>
 
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" VerticalAlignment="Bottom" Margin=" 0 20 0 50">
                     <Button x:Name="addButton" Width="80" Height="36" Margin="0 0 0 10" Content="Add" Click="addButton_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#01BEA4" Foreground="White">
