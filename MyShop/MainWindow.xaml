@@ -6,11 +6,11 @@
         xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
         xmlns:local="clr-namespace:MyShop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" Loaded="Window_Loaded" Closing="RibbonWindow_Closing">
+        Title="MainWindow" Height="680" Width="800" Loaded="Window_Loaded">
 
 
     <DockPanel LastChildFill="True">
-        <Fluent:Ribbon DockPanel.Dock="Top" Height="50" Width="800">
+        <Fluent:Ribbon DockPanel.Dock="Top" Height="30" Width="800">
             <Fluent:Ribbon.Menu>
                 <Fluent:Backstage Header="Edit">
                     <Fluent:BackstageTabControl>
@@ -24,149 +24,195 @@
             <Fluent:RibbonTabItem Header="Home">
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
-        <Canvas>
-            <Label Canvas.Left="621" Canvas.Top="62" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.515,-0.404" Foreground="#3E8DCC">Book Shop</Label>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-            <Label x:Name="totalBooksLabel" Content="Total Books: " Canvas.Left="622" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.183,1.042" />
+            <DockPanel Margin="0,0,0,10" LastChildFill="True">
+                <Label DockPanel.Dock="Top" FontSize="25" FontWeight="DemiBold" 
+                       HorizontalAlignment="Center" VerticalAlignment="Top" 
+                       Foreground="#3E8DCC">Book Shop</Label>
 
-            <Label x:Name="Category" Content="Category" Canvas.Left="322" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
-            <ComboBox Name="categoriesComboBox" DisplayMemberPath="Name" SelectionChanged="categoriesComboBox_SelectionChanged" Canvas.Left="380" Canvas.Top="22" HorizontalAlignment="Center" VerticalAlignment="Top" Width="154" ></ComboBox>
-            <Button Content="Clear" Click="ClearSelectionButton_Click" Canvas.Left="540" Canvas.Top="23" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="60 0 0 0">
+                    <Label x:Name="NameSearch" Content="Name" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+                    <TextBox x:Name="keywordTextBox" Margin="30 0 0 0" TextChanged="keywordTextBox_TextChanged" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
 
-            <Button x:Name="addButton" Width="80" Height="36" Content="Add" Click="addButton_Click" Canvas.Left="640" Canvas.Top="249" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#01BEA4" Foreground="White">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button x:Name="removeButton" Width="80" Height="36" Content="Remove" Click="removeButton_Click" Canvas.Left="640" Canvas.Top="309" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Background="Red">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button x:Name="editButton" Width="80" Height="36" Content="Edit" Click="editButton_Click" Canvas.Left="640" Canvas.Top="369" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Background="#2196F3">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+                    <Label x:Name="totalBooksLabel" Content="Total Books: " Margin="50 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.183,1.042" />
+                </StackPanel>
 
-            <TextBox x:Name="keywordTextBox" TextChanged="keywordTextBox_TextChanged" Width="200" Canvas.Left="75" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <TextBox.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <Label x:Name="NameSearch" Content="Name" Canvas.Left="28" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="60 0 0 0" >
+                    <Label x:Name="Category" Content="Category" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                    <ComboBox Name="categoriesComboBox" Margin="15 0 0 0" DisplayMemberPath="Name" SelectionChanged="categoriesComboBox_SelectionChanged" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" ></ComboBox>
+                    <Button Margin="50 0 0 0" Content="Clear" Click="ClearSelectionButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
-            <Label x:Name="Min" Content="Price" HorizontalAlignment="Left" Canvas.Left="617" VerticalAlignment="Center" Canvas.Top="141"></Label>
-            <TextBox x:Name="minPriceTextBox" Width="40" Canvas.Left="658" Canvas.Top="145" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Min" RenderTransformOrigin="0.525,-0.276" GotFocus="OnMinPriceTextBoxGotFocus" />
-            <TextBox x:Name="maxPriceTextBox" Width="40" Canvas.Left="703" Canvas.Top="145" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Max" RenderTransformOrigin="0.2,-0.109" GotFocus="OnMaxPriceTextBoxGotFocus" />
-            <Button x:Name="searchByPriceButton" Content="Search by Price" Width="100" Height="20" Canvas.Left="628" Canvas.Top="172" HorizontalAlignment="Left" VerticalAlignment="Top" Click="searchByPriceButton_Click" >
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Content="Clear Price" Click="ClearPriceButton_Click" Canvas.Left="650" Canvas.Top="200" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+                    <Button x:Name="catButton" Margin="30 0 0 0" Width="80" Height="25" Content="Edit Category" Click="catButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Background="PaleVioletRed"  Foreground="White"/>
 
+                </StackPanel>
 
-            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Name="booksListView" SelectedValuePath="Id" Width="540" Height="317" Canvas.Left="28" Canvas.Top="51" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=5}">
-                <ListView.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </ListView.Resources>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="1"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="60 0 0 0 ">
+                    <Label x:Name="Min" Content="Price" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+                    <TextBox x:Name="minPriceTextBox" Margin="0 0 5 0" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Min" GotFocus="OnMinPriceTextBoxGotFocus" />
+                    <TextBox x:Name="maxPriceTextBox" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Max" GotFocus="OnMaxPriceTextBoxGotFocus" />
+                    <Button x:Name="searchByPriceButton" Margin="40 0 0 0" Content="Search by Price" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Click="searchByPriceButton_Click" >
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Content="Clear Price" Margin="55 0 0 0" Width="80" Click="ClearPriceButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Height="200" >
+                <ListView DockPanel.Dock="Top" Height="410" Width="500" Margin="0 10 0 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  Name="booksListView" SelectedValuePath="Id" HorizontalAlignment="Center" VerticalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="booksListView_SelectionChanged" LostFocus="booksListView_LostFocus">
+                    <ListView.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
 
-                            <Image Source="{Binding Cover_Image}" Width="150" Height="200"/>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border x:Name="ItemBorder" BorderBrush="CornflowerBlue"  BorderThickness="1" CornerRadius="10" Background="{TemplateBinding Background}">
+                                            <ContentPresenter/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="Red" />
+                                                <Setter TargetName="ItemBorder" Property="Background" Value="LightCoral" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.Resources>
 
-                            <StackPanel Orientation="Vertical" Margin="20,50,0,0" >
-                                <TextBlock>
-                        <Run Text="Name: " /> 
-                        <Run Text="{Binding Name}" Foreground="Blue" FontWeight="Bold"/>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Height="190" Width="200" >
+                                <Image Source="{Binding Cover_Image}" Width="150" Height="160"/>
+                                <TextBlock TextWrapping="Wrap">
+                                    <Run Text="Name: " /> 
+                                    <Run Text="{Binding Name}" Foreground="Blue" FontWeight="Bold"/>
                                 </TextBlock>
-
-                                <TextBlock><Run Text="Author: " /><Run Text=" "/><Run Text="{Binding Author}" FontStyle="Italic"/></TextBlock>
-
-                                <TextBlock><Run Text="Published Year: "/><Run Text=" "/><Run Text="{Binding Year}" FontStyle="Italic"/></TextBlock>
-
-                                <TextBlock><Run Text="Price: "/><Run Text=" "/><Run Text="{Binding Price}" FontStyle="Italic"/></TextBlock>
-
-                                <TextBlock><Run Text="Category: "/><Run Text=" "/><Run Text="{Binding Category_Name}" FontStyle="Italic"/></TextBlock>
-
-                                <TextBlock>
-                        <Run Text="Quantity: "/>
-                        <Run Text="{Binding Quantity}" FontStyle="Italic"/>
-                                </TextBlock>
-
                             </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="60 20 0 0">
+                    <Button x:Name="previousButton" Width="80" Height="34" Margin="10 0 10 0" Content="Previous" Click="previousButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="Black">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
-            <ComboBox Name="pagingComboBox" Width="50" Canvas.Left="403" Canvas.Top="389" SelectionChanged="pagingComboBox_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                <Run Text="{Binding Page, Mode=OneTime}"/>/<Run Text="{Binding Total, Mode=OneTime}"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+                    <ComboBox Name="pagingComboBox" Width="50" SelectionChanged="pagingComboBox_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <Run Text="{Binding Page, Mode=OneTime}"/>/<Run Text="{Binding Total, Mode=OneTime}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-            <Button x:Name="previousButton" Width="80" Height="34" Content="Previous" Canvas.Left="303" Canvas.Top="383" Click="previousButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="Black">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button x:Name="nextButton" Width="80" Height="34" Content="Next" Canvas.Left="474" Canvas.Top="383" HorizontalAlignment="Left" VerticalAlignment="Center" Click="nextButton_Click" RenderTransformOrigin="-0.481,0.486" Foreground="White" Background="Black">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
 
-            <Label x:Name="NoBooks" Content="Books/Page" Canvas.Left="100" Canvas.Top="387"></Label>
-            <ComboBox x:Name="booksPerPageComboBox" SelectedIndex="1" SelectionChanged="booksPerPageComboBox_SelectionChanged" Canvas.Left="180" Canvas.Top="389" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <ComboBoxItem Content="3"/>
-                <ComboBoxItem Content="5"/>
-                <ComboBoxItem Content="10"/>
-            </ComboBox>
-            <Button x:Name="catButton" Width="80" Height="36" Content="Category" Click="catButton_Click" Canvas.Left="640" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        </Canvas>
+                    <Button x:Name="nextButton" Width="80" Height="34"  Margin="10 0 10 0"  Content="Next" Canvas.Left="354" Canvas.Top="512" HorizontalAlignment="Left" VerticalAlignment="Center" Click="nextButton_Click" RenderTransformOrigin="-0.481,0.486" Foreground="White" Background="Black">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
+                    <Label x:Name="NoBooks" Content="Books/Page" Margin="100 0 0 0" VerticalAlignment="Center" ></Label>
+                    <ComboBox x:Name="booksPerPageComboBox" SelectedIndex="1" SelectionChanged="booksPerPageComboBox_SelectionChanged" Canvas.Left="59" Canvas.Top="523" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBoxItem Content="8"/>
+                        <ComboBoxItem Content="10"/>
+                    </ComboBox>
+                </StackPanel>
+
+            </DockPanel>
+
+
+            <DockPanel Grid.Column="1" x:Name="bookDetailsDockPanel">
+                <Label DockPanel.Dock="Top" Margin="0 50 0 0"
+                       x:Name="BookDetail" Content="Book Detail" 
+                       Height="30" FontWeight="Bold" Padding="3" Foreground="#007acc"
+                       FontSize="20" FontFamily="Times" FontStretch="Medium"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                <Border  DockPanel.Dock="Top"  BorderBrush="CornflowerBlue" BorderThickness="2" CornerRadius="10" Height="320" Margin="0 0 10 0">
+                    <StackPanel Margin="10 0 10 0">
+                        <Image x:Name="BookDetailImage" Source="{Binding Cover_Image}" Width="150" Height="200"/>
+
+                        <TextBlock x:Name="BookName" TextWrapping="Wrap"> <Run Text="Name: " /><Run Text="{Binding Name}"  Foreground="Blue" FontWeight="Bold"></Run></TextBlock>
+                        <TextBlock x:Name="BookAuthor"><Run Text="Author: " /><Run Text="{Binding Author}" FontStyle="Italic"></Run></TextBlock>
+                        <TextBlock x:Name="BookYear"><Run Text="Published Year: "/><Run Text="{Binding Year}" FontStyle="Italic"></Run></TextBlock>
+                        <TextBlock x:Name="BookPrice"> <Run Text="Price: "/><Run Text="{Binding Price}" FontStyle="Italic"/></TextBlock>
+                        <TextBlock x:Name="BookCategory"><Run Text="Category: "/><Run Text="{Binding Category_Name}" FontStyle="Italic"/></TextBlock>
+                        <TextBlock x:Name="BookQuantity"><Run Text="Quantity: "/><Run Text="{Binding Quantity}" FontStyle="Italic"/></TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" VerticalAlignment="Bottom" Margin=" 0 20 0 50">
+                    <Button x:Name="addButton" Width="80" Height="36" Margin="0 0 0 10" Content="Add" Click="addButton_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#01BEA4" Foreground="White">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="removeButton" Width="80" Height="36" Margin="0 0 0 10" Content="Remove" Click="removeButton_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Background="Red">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="editButton" Width="80" Height="36" Content="Edit" Click="editButton_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Background="#2196F3">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
 
     </DockPanel>
 </Fluent:RibbonWindow>

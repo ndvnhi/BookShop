@@ -28,12 +28,12 @@ namespace MyShop
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _rowsPerPage = 5;
+            _rowsPerPage = 4;
             LoadCategories();
             LoadAllBooks();
         }
 
-        int _rowsPerPage = 5;
+        int _rowsPerPage = 4;
         int _totalPages = -1;
         int _totalItems = -1;
         int _currentPage = 1;
@@ -78,7 +78,6 @@ namespace MyShop
                     count = (int)reader["Total"];
                 }
             }
-
             booksListView.ItemsSource = _books;
 
             if (count != _totalItems)
@@ -226,6 +225,7 @@ namespace MyShop
                 if (success)
                 {
                     MessageBox.Show($"Book with ID '{bookId}' removed successfully.");
+                    booksListView.Items.Refresh();
                 }
                 else
                 {
@@ -240,6 +240,7 @@ namespace MyShop
             {
                 MessageBox.Show($"Unexpected error: {ex.Message}");
             }
+
         }
 
         private void removeButton_Click(object sender, RoutedEventArgs e)
@@ -383,6 +384,58 @@ namespace MyShop
             config.AppSettings.Settings["LastScreen"].Value = lastScreen;
             config.Save(ConfigurationSaveMode.Minimal);
             ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        private void booksListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (booksListView.SelectedItem != null)
+            {
+                Book selectedBook = (Book)booksListView.SelectedItem;
+
+                GetBookDetails(selectedBook);
+            }
+        }
+
+        private void GetBookDetails(Book selectedBook)
+        {
+            if (!string.IsNullOrEmpty(selectedBook.Cover_Image))
+            {
+                try
+                {
+                    BookDetailImage.Source = new BitmapImage(new Uri(selectedBook.Cover_Image, UriKind.RelativeOrAbsolute));
+                }
+                catch (UriFormatException ex)
+                {
+                    MessageBox.Show($"Error loading image: {ex.Message}");
+                }
+            }
+            else
+            {
+                BookDetailImage.Source = null;
+            }
+
+            BookName.Text = $"Name: {selectedBook.Name}";
+            BookAuthor.Text = $"Author: {selectedBook.Author}";
+            BookYear.Text = $"Published Year: {selectedBook.Year}";
+            BookPrice.Text = $"Price: {selectedBook.Price}";
+            BookCategory.Text = $"Category: {selectedBook.Category_Name}";
+            BookQuantity.Text = $"Quantity: {selectedBook.Quantity}";
+        }
+
+        private void booksListView_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ClearBookDetails();
+        }
+
+        private void ClearBookDetails()
+        {
+            BookDetailImage.Source = null;
+            BookName.Text = string.Empty;
+            BookAuthor.Text = string.Empty;
+            BookYear.Text = string.Empty;
+            BookPrice.Text = string.Empty;
+            BookCategory.Text = string.Empty;
+            BookQuantity.Text = string.Empty;
         }
     }
 }
