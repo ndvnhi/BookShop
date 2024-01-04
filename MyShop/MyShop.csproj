@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTO\**" />
+    <EmbeddedResource Remove="DTO\**" />
+    <None Remove="DTO\**" />
+    <Page Remove="DTO\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Fluent.Ribbon" Version="10.0.4" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
@@ -36,10 +43,6 @@
 		<None Remove="assets\Book\20.jpg" />
 		<None Remove="assets\Book\21.jpg" />
 	</ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTO\" />
-  </ItemGroup>
 
 	<ItemGroup>
 		<Resource Include="assets\Book\01.jpg" />
