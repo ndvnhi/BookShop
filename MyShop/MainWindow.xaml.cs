@@ -360,12 +360,14 @@ namespace MyShop
         {
             var dashboard = new Dashboard();
             dashboard.Show();
+            this.Close();
         }
 
         private void invoice_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var invoices = new Invoice_Management();
             invoices.Show();
+            this.Close();
         }
 
         private void logout_click(object sender, System.Windows.Input.MouseButtonEventArgs e)

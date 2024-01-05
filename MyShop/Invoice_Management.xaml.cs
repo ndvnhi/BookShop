@@ -251,5 +251,12 @@ namespace MyShop
             var addInvoiceWindow = new AddInvoice();
             addInvoiceWindow.ShowDialog();
         }
+
+        private void Home_click(object sender, MouseButtonEventArgs e)
+        {
+            var MainWindow = new MainWindow();
+            MainWindow.Show();
+            this.Close();
+        }
     }
 }
